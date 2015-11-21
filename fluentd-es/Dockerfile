@@ -1,6 +1,5 @@
-# from https://github.com/GoogleCloudPlatform/kubernetes/blob/master/contrib/logging/fluentd-es-image/Dockerfile
 FROM ubuntu:14.04
-MAINTAINER ChangHoon Jeong "iamseapy@gmail.com"
+MAINTAINER Minwoo Lee "ermaker@gmail.com"
 
 # Ensure there are enough file descriptors for running Fluentd.
 RUN ulimit -n 65536
@@ -24,14 +23,4 @@ RUN /usr/sbin/td-agent-gem install fluent-plugin-elasticsearch
 ## add hostname
 RUN /usr/sbin/td-agent-gem install fluent-plugin-hostname
 
-# Copy the Fluentd configuration file.
-COPY td-agent.conf /etc/td-agent/td-agent.conf
-
-# Copy a script that determines the name of the host machine
-# and then patch the Fluentd configuration files and then
-# run Fluentd in the foreground.
-ADD run.sh /run.sh
-RUN chmod 700 /run.sh
-
-# Always run the this setup script.
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["/usr/sbin/td-agent"]
